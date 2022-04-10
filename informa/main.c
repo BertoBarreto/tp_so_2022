@@ -54,7 +54,7 @@ int print(char *string)
 
 int main(int argc, char const *argv[])
 {
-  // Verificar se é recebido apenas os argumentos necessários
+  // Verificar se é recebido apenas os argumentos necessários, execução do programa e ficheiro
   if (argc > 2 || argc < 2)
   {
     perror("Argumentos invalidos");
