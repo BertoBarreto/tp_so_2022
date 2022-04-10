@@ -41,11 +41,10 @@ char *getFileType(mode_t st_mode)
 /*
   Esta função permite imprimir na consola uma string
   Utilizando a função write é escrito para o stdout a string recebida
-
 */
-int print(char *string, long int size)
+int print(char *string)
 {
-  int wr = write(STDOUT_FILENO, string, size);
+  int wr = write(STDOUT_FILENO, string, strlen(string));
   if (wr < 0)
   {
     perror("Erro a escrever na consola");
@@ -110,12 +109,12 @@ int main(int argc, char const *argv[])
   snprintf(aDateString, aDateSize, "Data da ultima leitura: %s", aDate);
 
   // imprimir os dados na consola
-  print(fileTypeString, fileTypeSize);
-  print(iNodeString, iNodeSize);
-  print(ownerString, ownerSize);
-  print(cDateString, cDateSize);
-  print(mDateString, mDateSize);
-  print(aDateString, aDateSize);
+  print(fileTypeString);
+  print(iNodeString);
+  print(ownerString);
+  print(cDateString);
+  print(mDateString);
+  print(aDateString);
 
   return 0;
 }
