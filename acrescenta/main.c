@@ -11,10 +11,9 @@ long int getFileSize(char const *origin)
 
   return (long int)fileStat.st_size;
 }
-
+// TODO:Documentar o codigo
 int main(int argc, char const *argv[])
 {
-
   if (argc > 3 || argc < 3)
   {
     perror("Argumentos invalidos");
@@ -39,19 +38,19 @@ int main(int argc, char const *argv[])
     exit(-1);
   }
 
-  long int originSize = getFileSize(origin);
-  char originContent[originSize];
-  int readBytes = read(fdOrigin, originContent, originSize);
+  long int sizeOfOrigin = getFileSize(origin);
+  char originContent[sizeOfOrigin];
+  int readBytes = read(fdOrigin, originContent, sizeOfOrigin);
   if (readBytes < 0)
   {
-    perror("não foi possivel ler o ficheiro de destino");
+    perror("Erro a ler o ficheiro de origem");
     exit(-1);
   }
 
-  int written = write(fdDestination, originContent, originSize);
+  int written = write(fdDestination, originContent, sizeOfOrigin);
   if (written < 0)
   {
-    perror("não foi possivel escrever no destino");
+    perror("Erro a escrever no ficheiro de destino");
     exit(-1);
   }
 
