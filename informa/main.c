@@ -58,14 +58,14 @@ int main(int argc, char const *argv[])
   if (argc > 2 || argc < 2)
   {
     perror("Argumentos invalidos");
-    exit(-1);
+    exit(1);
   }
 
   // verificar se o ficheiro existe
   if (open(argv[1], O_RDONLY) < 0)
   {
     perror("Erro no ficheiro");
-    exit(-1);
+    exit(1);
   }
 
   // obter o stat do ficheiro
