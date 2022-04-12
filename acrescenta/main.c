@@ -52,7 +52,7 @@ int main(int argc, char const *argv[])
 
   // abertura do ficheiro de destino verificando se este existe
   // caso não exista, é lançado um erro
-  fdDestination = open(destination, O_WRONLY | O_APPEND | O_CREAT, S_IWUSR | S_IRUSR);
+  fdDestination = open(destination, O_WRONLY | O_APPEND);
   if (fdDestination == -1)
   {
     perror("Erro na abertura do ficheiro de destino");
