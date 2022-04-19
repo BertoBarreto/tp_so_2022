@@ -4,18 +4,6 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-/*
-Função que recebe o ficheiro de origem e devolve o tamanho
-Esta função através do stat consegue obter o tamanho do ficheiro em bytes devolvendo então
-*/
-long int getFileSize(char const *origin)
-{
-  struct stat fileStat;
-  stat(origin, &fileStat);
-
-  return (long int)fileStat.st_size;
-}
-
 int main(int argc, char const *argv[])
 {
 
@@ -46,7 +34,8 @@ int main(int argc, char const *argv[])
   fdOrigin = open(origin, O_RDONLY);
   if (fdOrigin == -1)
   {
-    perror("Erro na abertura do ficheiro de origem");
+    
+    perror("Ficheiro  inexistente");
     exit(1);
   }
 
@@ -55,7 +44,7 @@ int main(int argc, char const *argv[])
   fdDestination = open(destination, O_WRONLY | O_APPEND);
   if (fdDestination == -1)
   {
-    perror("Erro na abertura do ficheiro de destino");
+    perror("Ficheiro de destino inexistente");
     exit(1);
   }
 
