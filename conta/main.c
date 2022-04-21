@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 int main(int argc, char const *argv[])
 {
@@ -13,7 +16,7 @@ int main(int argc, char const *argv[])
   // vai verificar se o ficheiro existe, caso contrário dá erro
   if (fd == -1)
   {
-    perror("Ficheiro não existe");
+    write(STDERR_FILENO, "Ficheiro não existe\n", 22);
     exit(1);
   }
 
@@ -21,21 +24,30 @@ int main(int argc, char const *argv[])
   //  guarda na variavel len
   //  de seguida vai percorrer todos os caracteres e sempre que encontra \n
   // entao vai acrescentar ao contador de linhas mais 1
-  len = read(fd, content, sizeof(content));
-  for (int i = 0; i < len; i++)
-  {
-    if (content[i] == "\n")
-    {
-      contadorLinhas++;
-    }
-  }
 
-  // por fim fechamos o fiicheiro
+  do
+  {
+    len = read(fd, content, BUFSIZ);
+
+    for (int i = 0; i < len; i++)
+    {
+      if (content[i] == '\n')
+      {
+        contadorLinhas++;
+      }
+    }
+  } while (len > 0);
+
+  char mostraResultado[32 + sizeof(contadorLinhas)];
+  // função write serve para apresentar ao utilizador quantas linhas tem o ficheiro
+  snprintf(mostraResultado, 32 + sizeof(contadorLinhas), "O ficheiro contém: %d linhas \n", contadorLinhas);
+  write(STDOUT_FILENO, mostraResultado, strlen(mostraResultado));
+  // por fim fechamos o ficheiro
   fecharFicheiro = close(fd);
   // caso haja erro então devolvemos uma mensagemcom o erro
   if (fecharFicheiro == -1)
   {
-    perror("Não foi possivel fechar o ficheiro");
+    write(STDERR_FILENO, "Não foi possivel fechar o ficheiro\n", 37);
     exit(1);
   }
 
