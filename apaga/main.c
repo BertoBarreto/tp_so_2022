@@ -1,6 +1,3 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -20,25 +17,13 @@ int main(int argc, char const *argv[])
         exit(1);
     }
 
-    // Tentar abrir o ficheiro
-    char const *file = argv[1];
+  int file;
 
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-    {
-      perror("Erro na abertura do ficheiro!");
-      exit(1);
-    }
-    else if(fd == 0)
-    {
-      perror("O ficheiro não existe no i-node!");
-      exit(1);
-    }
-
-    // Dados do ficheiro, tentar ver se quem pretende eliminar é o dono
- 
-
-
+  file = unlink(argv[1]);
+  if (file == -1)
+  {
+    printf("Ocorreu um erro a abrir o ficheiro ou o ficheiro nao existe!");
+  }
 
   return 0;
 }
