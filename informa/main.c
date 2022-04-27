@@ -47,25 +47,32 @@ int print(char *string)
   int wr = write(STDOUT_FILENO, string, strlen(string));
   if (wr < 0)
   {
-    perror("Erro a escrever na consola");
+    write(STDERR_FILENO, "Erro a escrever na consola\n", 28);
+    exit(1);
   }
   return 1;
 }
 
 int main(int argc, char const *argv[])
 {
-  // Verificar se é recebido apenas os argumentos necessários, execução do programa e ficheiro
-  if (argc > 2 || argc < 2)
+
+  // Verificar se é recebido 3 argumentos, execução do programa, ficheiro de origem e ficheiro de destino
+  if (argc > 2)
   {
-    perror("Argumentos invalidos");
-    exit(-1);
+    write(STDERR_FILENO, "Muitos Argumentos!\nSintaxe: ./informa ficheiro\n", 48);
+    exit(1);
+  }
+  if (argc < 2)
+  {
+    write(STDERR_FILENO, "Poucos Argumentos!\nSintaxe: ./acrescenta ficheiro\n", 51);
+    exit(1);
   }
 
   // verificar se o ficheiro existe
   if (open(argv[1], O_RDONLY) < 0)
   {
-    perror("Erro no ficheiro");
-    exit(-1);
+    write(STDERR_FILENO, "Erro no ficheiro\n", 18);
+    exit(1);
   }
 
   // obter o stat do ficheiro
