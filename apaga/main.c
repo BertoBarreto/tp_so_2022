@@ -8,12 +8,12 @@ int main(int argc, char const *argv[])
   //Verifica o número de argumentos
     if (argc < 2)
     {
-        write(STDERR_FILENO, "Número de argumentos insuficiente!\nSintaxe: ./mostra nomeFicheiro\n", 67);
+        write(STDERR_FILENO, "Número de argumentos insuficiente!\nSintaxe: ./apaga nomeFicheiro\n", 67);
         exit(1);
     }
     else if (argc > 2)
     {
-        write(STDERR_FILENO, "Argumentos a mais!\nSintaxe: ./mostra nomeFicheiro\n", 50);
+        write(STDERR_FILENO, "Argumentos a mais!\nSintaxe: ./apaga nomeFicheiro\n", 50);
         exit(1);
     }
 
