@@ -4,19 +4,37 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h> //para o strcat
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char *argv[])
+{   
+    char* nomeFicheiroCopia;
+
+    // Verificar se é recebido 2 argumentos, execução do programa (./copia) ficheiro de origem
+    if (argc > 2)
+    {
+        write(STDERR_FILENO, "Muitos Argumentos!\nSintaxe: ./copia origem \n", 45);
+        exit(1);
+    }
+    if (argc < 2)
+    {
+        write(STDERR_FILENO, "Poucos Argumentos!\nSintaxe: ./copia origem \n", 45);
+        exit(1);
+    }
+
     int fd, fd2, bytesLidos, bytesEscritos, resultadoClose, resultadoClose2;
     char buffer[BUFSIZ];
 
     // abertura do ficheiro, verificando em seguida se este existe
-    fd = open(argv[1], O_RDONLY, S_IRUSR);
+    fd = open(argv[1], O_RDONLY);
     // se acontecer algum erro como o ficheiro não existir, vai ser retornado -1 (erro)
     if(fd == -1) { perror("ERRO!!! O ficheiro não existe."); exit(1); }
 
+    // o strcat junta o 2º argumento no fim do 1º
+    nomeFicheiroCopia = strcat(argv[1], ".copia");
+
     // abertura ou criação do ficheiro onde vamos copiar o conteúdo do original
-    fd2 = open(argv[2], O_CREAT | O_WRONLY, S_IWUSR | S_IRUSR);
+    fd2 = open(nomeFicheiroCopia, O_CREAT | O_WRONLY | O_TRUNC, S_IWUSR | S_IRUSR);
     if(fd == -1) { perror("ERRO!!! O ficheiro não existe."); exit(1); }
 
     // ciclo que irá ser útil caso o ficheiro tenho um tamanho muito grande
